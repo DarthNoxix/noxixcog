@@ -340,8 +340,8 @@ class settings(commands.Cog):
         button = ActionRow(
             Button(
                 style=ButtonStyle.grey,
-                label="Create ticket",
-                emoji="🎟️",
+                label="Open an embassy",
+                emoji="👑",
                 custom_id="create_ticket_button",
                 disabled=False
             )

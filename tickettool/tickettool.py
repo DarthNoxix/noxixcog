@@ -49,10 +49,10 @@ class TicketTool(settings, commands.Cog):
                 "emoji_close": "🔒",
                 "last_nb": 0000,
                 "embed_button": {
-                    "title": "Create a ticket",
-                    "description": ( "To get help on this server or to place a command for example, you can create a ticket.\n"
-                                     "Just use the command `{prefix}ticket create` or click on the button below.\n"
-                                     "You can then use the `{prefix}ticket` subcommand to manage your ticket."),
+                    "title": "Open An Embassy",
+                    "description": ( "To open an embassy with us please press the button below.\n"
+                                     "If you have a serious matter that you need handled now please dm Klaus or Valentinos.\n"
+                                     "We hope you enjoy your stay!"),
                 },
             },
             "tickets": {},
