@@ -1,11 +1,11 @@
 {
     "author": ["AAA3A"],
-    "name": "TicketTool",
+    "name": "EmbassyTool",
     "install_msg": "Thank you for installing this cog! \nDo `[p]help` to get the list of commands and their description. \nIt does not use user data.",
-    "short": "A cog to manage a ticket system!",
-    "description": "Have you ever wanted to set up a ticket system, with many options for the user and the support team, on your server? Then this cog is for you! It has many settings, buttons, a reaction to create the ticket, many commands working in the ticket channel, different roles with access to different options...",
+    "short": "A cog to manage a embassy system!",
+    "description": "Have you ever wanted to set up an embassy system, with many options for the user and the FA team, on your server? Then this cog is for you! It has many settings, buttons, a reaction to create the embassy, many commands working in the embassy channel, different roles with access to different options...",
     "tags": [
-        "ticket",
+        "embassy",
         "tool",
         "system"
     ],

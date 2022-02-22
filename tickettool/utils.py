@@ -10,17 +10,17 @@ class utils():
     def __init__(self, bot):
         self.bot = bot
 
-    async def get_overwrites(self, ticket):
-        config = await ticket.bot.get_cog("TicketTool").get_config(ticket.guild)
+    async def get_overwrites(self, embassy):
+        config = await embassy.bot.get_cog("EmbassyTool").get_config(embassy.guild)
         overwrites = {
-            ticket.owner: discord.PermissionOverwrite(
+            embassy.owner: discord.PermissionOverwrite(
                 view_channel=True,
                 read_messages=True,
                 read_message_history=True,
                 send_messages=True,
                 attach_files=True,
             ),
-            ticket.guild.me: discord.PermissionOverwrite(
+            embassy.guild.me: discord.PermissionOverwrite(
                 view_channel=True,
                 read_messages=True,
                 read_message_history=True,
@@ -30,12 +30,12 @@ class utils():
                 manage_channels=True,
                 manage_permissions=True,
             ),
-            ticket.guild.default_role: discord.PermissionOverwrite(
+            embassy.guild.default_role: discord.PermissionOverwrite(
                 view_channel=False,
             )
         }
-        if ticket.claim is not None:
-            overwrites[ticket.claim] = (
+        if embassy.claim is not None:
+            overwrites[embassy.claim] = (
                 discord.PermissionOverwrite(
                     view_channel=True,
                     read_messages=True,

@@ -11,32 +11,32 @@ class settings(commands.Cog):
 
     @commands.guild_only()
     @commands.admin_or_permissions(administrator=True)
-    @commands.group(name="setticket", aliases=["ticketset"])
+    @commands.group(name="setembassy", aliases=["embassyset"])
     async def config(self, ctx):
-        """Configure TicketTool for your server."""
+        """Configure EmbassyTool for your server."""
 
     @config.command(name="enable", usage="<true_or_false>")
     async def enable(self, ctx, state: bool):
-        """Enable or disable Ticket System
+        """Enable or disable Embassy System
 
         Use `True` (Or `yes`) to enable or `False` (or `no`) to disable.
         """
         config = await self.data.guild(ctx.guild).settings.all()
 
         if config["category_open"] is None or config["category_close"] is None or config["admin_role"] is None:
-            await ctx.send("You cannot enable the ticket system on this server if you have not configured the following options:",
-                            f"- The category of open tickets : `{ctx.prefix}setticket categoryopen <category>`",
-                            f"- The category of close tickets : `{ctx.prefix}setticket categoryclose <category>`",
-                            f"- The admin role has full access to the tickets : `{ctx.prefix}setticket adminrole <role>`",
+            await ctx.send("You cannot enable the embassy system on this server if you have not configured the following options:",
+                            f"- The category of open embassys : `{ctx.prefix}setembassy categoryopen <category>`",
+                            f"- The category of close embassys : `{ctx.prefix}setembassy categoryclose <category>`",
+                            f"- The admin role has full access to the embassys : `{ctx.prefix}setembassy adminrole <role>`",
                             "All other parameters are optional or have default values that will be used.")
 
         actual_enable = config["enable"]
         if actual_enable is state:
-            await ctx.send(f"Ticket System is already set on {state}.")
+            await ctx.send(f"Embassy System is already set on {state}.")
             return
 
         await self.data.guild(ctx.guild).settings.enable.set(state)
-        await ctx.send(f"Ticket System state registered: {state}.")
+        await ctx.send(f"Embassy System state registered: {state}.")
 
     @config.command(aliases=["lchann", "lchannel", "logschan", "logchannel", "logsc"], usage="<text_channel_or_'none'>")
     async def logschannel(self, ctx, *, channel: typing.Optional[discord.TextChannel]=None):
@@ -60,7 +60,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<category_or_'none'>")
     async def categoryopen(self, ctx, *, category: typing.Optional[discord.CategoryChannel]=None):
-        """Set a category where open tickets are created.
+        """Set a category where open embassys are created.
 
         ``category``: Category.
         You can also use "None" if you wish to remove the open category.
@@ -75,7 +75,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<category_or_'none'>")
     async def categoryclose(self, ctx, *, category: typing.Optional[discord.CategoryChannel]=None):
-        """Set a category where close tickets are created.
+        """Set a category where close embassys are created.
 
         ``category``: Category.
         You can also use "None" if you wish to remove the close category.
@@ -90,7 +90,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<role_or_'none'>")
     async def adminrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
-        """Set a role for administrators of the ticket system.
+        """Set a role for administrators of the embassy system.
 
         ``role``: Role.
         You can also use "None" if you wish to remove the admin role.
@@ -105,7 +105,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<role_or_'none'>")
     async def supportrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
-        """Set a role for helpers of the ticket system.
+        """Set a role for helpers of the embassy system.
 
         ``role``: Role.
         You can also use "None" if you wish to remove the support role.
@@ -119,23 +119,23 @@ class settings(commands.Cog):
         await ctx.send(f"Support Role registered: {role.name}.")
 
     @config.command(usage="<role_or_'none'>")
-    async def ticketrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
-        """Set a role for creaters of a ticket.
+    async def embassyrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
+        """Set a role for creaters of a embassy.
 
         ``role``: Role.
-        You can also use "None" if you wish to remove the ticket role.
+        You can also use "None" if you wish to remove the embassy role.
         """
         if role is None:
-            await self.data.guild(ctx.guild).settings.ticket_role.clear()
-            await ctx.send("Ticket Role removed.")
+            await self.data.guild(ctx.guild).settings.embassy_role.clear()
+            await ctx.send("Embassy Role removed.")
             return
 
-        await self.data.guild(ctx.guild).settings.ticket_role.set(role.id)
-        await ctx.send(f"Ticket Role registered: {role.name}.")
+        await self.data.guild(ctx.guild).settings.embassy_role.set(role.id)
+        await ctx.send(f"Embassy Role registered: {role.name}.")
 
     @config.command(usage="<role_or_'none'>")
     async def viewrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
-        """Set a role for viewers of tickets.
+        """Set a role for viewers of embassys.
 
         ``role``: Role.
         You can also use "None" if you wish to remove the view role.
@@ -150,7 +150,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<role_or_'none'>")
     async def pingrole(self, ctx, *, role: typing.Optional[discord.Role]=None):
-        """Set a role for pings on ticket creation.
+        """Set a role for pings on embassy creation.
 
         ``role``: Role.
         You can also use "None" if you wish to remove the ping role.
@@ -165,7 +165,7 @@ class settings(commands.Cog):
 
     @config.command(usage="<int>")
     async def nbmax(self, ctx, int: int):
-        """Max Number of tickets for a member.
+        """Max Number of embassys for a member.
         """
         if int == 0:
             await ctx.send("Disable the system instead.")
@@ -303,7 +303,7 @@ class settings(commands.Cog):
 
     @config.command(name="auditlogs", aliases=["logsaudit"], usage="<true_or_false>")
     async def showauthor(self, ctx, state: bool):
-        """Make the author of each action concerning a ticket appear in the server logs.
+        """Make the author of each action concerning a embassy appear in the server logs.
 
         Use `True` (Or `yes`) to enable or `False` (or `no`) to disable.
         """
@@ -342,7 +342,7 @@ class settings(commands.Cog):
                 style=ButtonStyle.grey,
                 label="Open an embassy",
                 emoji="👑",
-                custom_id="create_ticket_button",
+                custom_id="create_embassy_button",
                 disabled=False
             )
         )
@@ -370,13 +370,13 @@ class settings(commands.Cog):
     @commands.is_owner()
     @config.command(name="purge", hidden=True)
     async def command_purge(self, ctx, confirmation: typing.Optional[bool]=False):
-        """Purge all existing tickets in the config. Does not delete any channels. All commands associated with the tickets will no longer work.
+        """Purge all existing embassys in the config. Does not delete any channels. All commands associated with the embassys will no longer work.
         """
-        config = await self.bot.get_cog("TicketTool").get_config(ctx.guild)
+        config = await self.bot.get_cog("EmbassyTool").get_config(ctx.guild)
         if not confirmation:
             embed: discord.Embed = discord.Embed()
-            embed.title = f"Do you really want to purge all the tickets in the config?"
-            embed.description = "Does not delete any channels. All commands associated with the tickets will no longer work."
+            embed.title = f"Do you really want to purge all the embassys in the config?"
+            embed.description = "Does not delete any channels. All commands associated with the embassys will no longer work."
             embed.color = config["color"]
             embed.set_author(name=ctx.author.name, url=ctx.author.avatar_url, icon_url=ctx.author.avatar_url)
             response = await utils(ctx.bot).ConfirmationAsk(ctx, embed=embed)
@@ -384,11 +384,11 @@ class settings(commands.Cog):
                 return
         count = 0
         to_remove = []
-        data = await ctx.bot.get_cog("TicketTool").data.guild(ctx.guild).tickets.all()
+        data = await ctx.bot.get_cog("EmbassyTool").data.guild(ctx.guild).embassys.all()
         for channel in data:
             count += 1
             to_remove.append(channel)
         for channel in to_remove:
             del data[str(channel)]
-        await ctx.bot.get_cog("TicketTool").data.guild(ctx.guild).tickets.set(data)
-        await ctx.send(f"{count} tickets have been removed from the config.")
+        await ctx.bot.get_cog("EmbassyTool").data.guild(ctx.guild).embassys.set(data)
+        await ctx.send(f"{count} embassys have been removed from the config.")
